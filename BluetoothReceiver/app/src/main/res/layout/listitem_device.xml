@@ -6,10 +6,44 @@
               android:layout_height="wrap_content"
               android:gravity="center">
 
-	<ImageView android:id="@+id/device_icon"
-	           android:layout_width="50dp"
-	           android:layout_height="50dp"
-	           android:src="@mipmap/unknown_text"/>
+	<RelativeLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="50dp"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentStart="true"
+			android:id="@+id/linearLayout5">
+
+			<ImageView
+				android:id="@+id/device_batteryicon"
+				android:layout_width="20dp"
+				android:layout_height="30dp"
+				android:layout_alignParentTop="true"
+				android:layout_alignParentStart="true"/>
+
+			<TextView
+				android:layout_width="30dp"
+				android:layout_height="wrap_content"
+				android:text=""
+				android:id="@+id/device_battery"
+				android:textSize="12dp"
+				android:textStyle="bold"
+				android:gravity="center"/>
+		</LinearLayout>
+
+		<ImageView android:id="@+id/device_icon"
+		           android:layout_width="50dp"
+		           android:layout_height="50dp"
+		           android:src="@mipmap/unknown_text"
+		           android:layout_below="@+id/linearLayout5"
+		           android:layout_alignParentStart="true"/>
+
+	</RelativeLayout>
 
 
 	<RelativeLayout

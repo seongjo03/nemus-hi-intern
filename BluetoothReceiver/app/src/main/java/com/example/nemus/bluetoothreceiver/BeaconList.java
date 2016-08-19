@@ -233,6 +233,8 @@ public class BeaconList extends AppCompatActivity {
             viewHolder = new ViewHolder();
             viewHolder.ListBackground = (LinearLayout)view.findViewById(R.id.background);
             viewHolder.deviceIcon = (ImageView)view.findViewById(R.id.device_icon);
+            viewHolder.deviceBatteryIcon = (ImageView)view.findViewById(R.id.device_batteryicon);
+            viewHolder.deviceBattery = (TextView)view.findViewById(R.id.device_battery);
             viewHolder.deviceName = (TextView)view.findViewById(R.id.device_name);
             viewHolder.deviceBssid = (TextView)view.findViewById(R.id.device_bssid);
             viewHolder.deviceUuid = (TextView)view.findViewById(R.id.device_uuid);
@@ -283,6 +285,20 @@ public class BeaconList extends AppCompatActivity {
             if(device.hum == 255) humview = "off";
             else humview = String.valueOf(device.hum);
 
+            String batteryview;
+            if(device.battery == 500) batteryview = "";
+            else{
+                batteryview = String.valueOf(device.battery);
+                if(device.battery >= 75) {
+                    viewHolder.deviceBatteryIcon.setImageResource(R.mipmap.battery_3);
+                }else if(device.battery >= 30){
+                    viewHolder.deviceBatteryIcon.setImageResource(R.mipmap.battery_2);
+                }else{
+                    viewHolder.deviceBatteryIcon.setImageResource(R.mipmap.battery_1);
+                }
+            }
+
+            viewHolder.deviceBattery.setText(batteryview+"%");
             viewHolder.deviceRssi.setText(rssis);
             viewHolder.deviceUuid.setText(device.uuid);
             viewHolder.deviceMajor.setText(device.major+"");
@@ -438,6 +454,8 @@ public class BeaconList extends AppCompatActivity {
     static class ViewHolder {
         LinearLayout ListBackground;
         ImageView deviceIcon;
+        ImageView deviceBatteryIcon;
+        TextView deviceBattery;
         TextView deviceName;
         TextView deviceBssid;
         TextView deviceUuid;
@@ -456,9 +474,9 @@ public class BeaconList extends AppCompatActivity {
         public int minor;
         public float temp;
         public int hum;
-        public int bettery;
+        public int battery;
 
-        public LeScanRecord(BluetoothDevice device, int rssi, String uuid, int major, int minor, int temp, int hum, int bettery) {
+        public LeScanRecord(BluetoothDevice device, int rssi, String uuid, int major, int minor, int temp, int hum, int battery) {
             this.device = device;
             this.rssi = rssi;
             this.uuid = uuid;
@@ -466,7 +484,7 @@ public class BeaconList extends AppCompatActivity {
             this.minor = minor;
             this.temp = temp;
             this.hum = hum;
-            this.bettery = bettery;
+            this.battery = battery;
         }
     }
 
