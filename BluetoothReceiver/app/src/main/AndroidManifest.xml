@@ -27,7 +27,11 @@
         <activity android:name=".BeaconList"
                   android:configChanges="orientation"
                   android:screenOrientation="portrait">
-            </activity>
+        </activity>
+        <activity android:name=".BeaconController"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

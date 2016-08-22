@@ -4,7 +4,7 @@ package com.example.nemus.bluetoothreceiver;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.le.ScanResult;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -40,7 +41,7 @@ public class BeaconList extends AppCompatActivity {
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
 
-    private ListView BeaconListView;
+    //private ListView BeaconListView;
 
 
     ArrayAdapter adapter;
@@ -50,7 +51,7 @@ public class BeaconList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beaconlist);
 
-        BeaconListView = (ListView) findViewById(R.id.list);
+        ListView BeaconListView = (ListView) findViewById(R.id.list);
         // Initializes list view adapter.
         mLeDeviceListAdapter = new LeDeviceListAdapter();
         BeaconListView.setAdapter(mLeDeviceListAdapter);
@@ -136,14 +137,15 @@ public class BeaconList extends AppCompatActivity {
         final LeScanRecord device = mLeDeviceListAdapter.getDevice(position);
         if (device == null) return;
 
-        //final Intent intent = new Intent(this, DeviceControlActivity.class);
+        final Intent intent = new Intent(this, BeaconController.class);
         //intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
         //intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+
         if (mScanning) {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             mScanning = false;
         }
-        //startActivity(intent);
+        startActivity(intent);
     }
 
     private void scanLeDevice(final boolean enable) {
@@ -172,7 +174,7 @@ public class BeaconList extends AppCompatActivity {
     private class LeDeviceListAdapter extends BaseAdapter {
         private ArrayList<LeScanRecord> mLeDevices;
         private ArrayList<BluetoothDevice> CheckDup;
-        private LayoutInflater mInflator;
+        LayoutInflater mInflator;
 
         public LeDeviceListAdapter() {
             super();
@@ -226,26 +228,30 @@ public class BeaconList extends AppCompatActivity {
             return i;
         }
 
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             // Gerneral ListView optimization code.
-            view = mInflator.inflate(R.layout.listitem_device, null);
-            viewHolder = new ViewHolder();
-            viewHolder.ListBackground = (LinearLayout)view.findViewById(R.id.background);
-            viewHolder.deviceIcon = (ImageView)view.findViewById(R.id.device_icon);
-            viewHolder.deviceBatteryIcon = (ImageView)view.findViewById(R.id.device_batteryicon);
-            viewHolder.deviceBattery = (TextView)view.findViewById(R.id.device_battery);
-            viewHolder.deviceName = (TextView)view.findViewById(R.id.device_name);
-            viewHolder.deviceBssid = (TextView)view.findViewById(R.id.device_bssid);
-            viewHolder.deviceUuid = (TextView)view.findViewById(R.id.device_uuid);
-            viewHolder.deviceRssi = (TextView)view.findViewById(R.id.device_rssi);
-            viewHolder.deviceMajor = (TextView)view.findViewById(R.id.device_major);
-            viewHolder.deviceMinor = (TextView)view.findViewById(R.id.device_minor);
-            viewHolder.deviceTemp = (TextView)view.findViewById(R.id.device_temp);
-            viewHolder.deviceHum = (TextView)view.findViewById(R.id.device_hum);
-            view.setTag(viewHolder);
+            View v = convertView;
+            if(v == null){
 
-            LeScanRecord device = mLeDevices.get(i);
+                v = mInflator.inflate(R.layout.listitem_device, null);
+            }
+            viewHolder = new ViewHolder();
+            viewHolder.ListBackground = (LinearLayout)v.findViewById(R.id.background);
+            viewHolder.deviceIcon = (ImageView)v.findViewById(R.id.device_icon);
+            viewHolder.deviceBatteryIcon = (ImageView)v.findViewById(R.id.device_batteryicon);
+            viewHolder.deviceBattery = (TextView)v.findViewById(R.id.device_battery);
+            viewHolder.deviceName = (TextView)v.findViewById(R.id.device_name);
+            viewHolder.deviceBssid = (TextView)v.findViewById(R.id.device_bssid);
+            viewHolder.deviceUuid = (TextView)v.findViewById(R.id.device_uuid);
+            viewHolder.deviceRssi = (TextView)v.findViewById(R.id.device_rssi);
+            viewHolder.deviceMajor = (TextView)v.findViewById(R.id.device_major);
+            viewHolder.deviceMinor = (TextView)v.findViewById(R.id.device_minor);
+            viewHolder.deviceTemp = (TextView)v.findViewById(R.id.device_temp);
+            viewHolder.deviceHum = (TextView)v.findViewById(R.id.device_hum);
+            v.setTag(viewHolder);
+
+            final LeScanRecord device = mLeDevices.get(position);
             final String deviceName = device.device.getName();
             if (deviceName != null && deviceName.length() > 0){
                 viewHolder.deviceName.setText(deviceName);
@@ -254,11 +260,12 @@ public class BeaconList extends AppCompatActivity {
                 viewHolder.deviceName.setText(R.string.unknown_device);
             }
 
-            if(i%2 == 1){
+            if(position%2 == 1){
                 viewHolder.ListBackground.setBackgroundColor(Color.parseColor("#f9f9f9"));
             }else{
                 viewHolder.ListBackground.setBackgroundColor(Color.parseColor("#ffffff"));
             }
+
 
             //final String deviceName = device.getName();
             if (deviceName != null && deviceName.length() > 0) {
@@ -307,7 +314,30 @@ public class BeaconList extends AppCompatActivity {
             viewHolder.deviceHum.setText(humview);
 
 
-            return view;
+            final int index = position;
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("OCL", " "+ index);
+                    Intent intent = new Intent(getApplicationContext(), BeaconController.class);
+                    intent.putExtra(BeaconController.data1, device.device.getName());
+                    intent.putExtra(BeaconController.data2, device.device.getAddress());
+                    intent.putExtra(BeaconController.data3, device.device.getUuids());
+
+                    //final Intent intent = new Intent(this, BeaconController.class);
+                    //intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
+                    //intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+
+                    if (mScanning) {
+                        mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                        mScanning = false;
+                    }
+                    startActivity(intent);
+                }
+            });
+
+            return v;
         }
     }
 
