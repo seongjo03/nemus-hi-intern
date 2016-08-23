@@ -72,10 +72,9 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/namespace"
-			android:layout_below="@+id/textView13"
-			android:layout_marginTop="8dp"
-			android:layout_alignParentStart="true"
-			android:clickable="true">
+			android:clickable="true"
+			android:layout_alignTop="@+id/textView23"
+			android:layout_alignParentStart="true">
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -101,10 +100,9 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/txpowerspace"
-			android:layout_below="@+id/namespace"
-			android:layout_centerHorizontal="true"
-			android:layout_marginTop="8dp"
-			android:clickable="true">
+			android:clickable="true"
+			android:layout_below="@+id/textView17"
+			android:layout_alignParentStart="true">
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -129,10 +127,9 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/majorspace"
-			android:layout_below="@+id/txpowerspace"
-			android:layout_marginTop="8dp"
-			android:layout_centerHorizontal="true"
-			android:clickable="true">
+			android:clickable="true"
+			android:layout_below="@+id/textView19"
+			android:layout_alignParentStart="true">
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -157,10 +154,9 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/minorspace"
-			android:layout_below="@+id/majorspace"
-			android:layout_marginTop="8dp"
-			android:layout_centerHorizontal="true"
-			android:clickable="true">
+			android:clickable="true"
+			android:layout_below="@+id/textView21"
+			android:layout_alignParentStart="true">
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -198,6 +194,49 @@
 			android:layout_below="@+id/textView15"
 			android:layout_alignParentEnd="true"
 			android:checked="false"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:id="@+id/textView17"
+			android:layout_below="@+id/namespace"
+			android:layout_centerHorizontal="true"
+			android:layout_alignParentStart="true"
+			android:background="#87c79540"
+			android:allowUndo="false"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:id="@+id/textView19"
+			android:background="#afc79540"
+			android:layout_below="@+id/txpowerspace"
+			android:layout_centerHorizontal="true"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:id="@+id/textView21"
+			android:background="#d7c79540"
+			android:layout_below="@+id/majorspace"
+			android:layout_centerHorizontal="true"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:id="@+id/textView22"
+			android:background="#c79540"
+			android:layout_below="@+id/minorspace"
+			android:layout_centerHorizontal="true"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:id="@+id/textView23"
+			android:background="#5fc79540"
+			android:layout_marginTop="8dp"
+			android:layout_below="@+id/textView13"
+			android:layout_alignParentStart="true"/>
 
 
 	</RelativeLayout>

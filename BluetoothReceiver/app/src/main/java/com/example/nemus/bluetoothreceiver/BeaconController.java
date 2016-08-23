@@ -3,6 +3,7 @@ package com.example.nemus.bluetoothreceiver;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,11 +28,22 @@ public class BeaconController extends AppCompatActivity {
 			data4 = "DEVICE_MAJOR",
 			data5 = "DEVICE_MINOR",
 			data6 = "SENSOR";
+	String mDeviceName,
+		mDeviceAddress,
+		mDeviceTxPower,
+		mDeviceMajor,
+		mDeviceMinor,
+		mSensor;
+
 	TextView t1, t2, t3, t4, t5, t6;
 	Switch s1;
 	RelativeLayout rl1, rl2, rl3, rl4;
 
 	int IS_CHANGED = 0;
+	int NAME_CHANGED = 0;
+	int TXPOWER_CHANGED = 0;
+	int MAJOR_CHANGED = 0;
+	int MINOR_CHANGED = 0;
 
 
 	public void onCreate(Bundle savedInstanceState){
@@ -43,12 +55,12 @@ public class BeaconController extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		final Intent intent = getIntent();
-		String mDeviceName = intent.getStringExtra(data1);
-		String mDeviceAddress = intent.getStringExtra(data2);
-		String mDeviceTxPower = intent.getStringExtra(data3);
-		String mDeviceMajor = intent.getStringExtra(data4);
-		String mDeviceMinor = intent.getStringExtra(data5);
-		String mSensor = intent.getStringExtra(data6);
+		mDeviceName = intent.getStringExtra(data1);
+		mDeviceAddress = intent.getStringExtra(data2);
+		mDeviceTxPower = intent.getStringExtra(data3);
+		mDeviceMajor = intent.getStringExtra(data4);
+		mDeviceMinor = intent.getStringExtra(data5);
+		mSensor = intent.getStringExtra(data6);
 
 		//Log.d("data1", data1 + " " + mDeviceName);
 		//Log.d("data2", data2 + " " + mDeviceAddress);
@@ -135,20 +147,52 @@ public class BeaconController extends AppCompatActivity {
 			}
 
 			public void onClick(DialogInterface dialog, int which){
-
 				String value = this.value.getText().toString();
-				//Log.d("info", index + " " + value);
+				if(!value.equals("") && !this.value.getHint().equals(value)){
 
-				if(index == 0){
-					t3.setText(value);
-				}else if(index == 1){
-					t4.setText(value);
-				}else if(index == 2){
-					t5.setText(value);
-				}else{
-					t6.setText(value);
+					if(index == 0){
+						t3.setText(value);
+						if(t3.getText().equals(mDeviceName)){
+							t3.setTextColor(Color.parseColor("#aaaaaa"));
+							NAME_CHANGED = 0;
+						}
+						else {
+							t3.setTextColor(Color.parseColor("#3a8abe"));
+							NAME_CHANGED = 1;
+						}
+					}else if(index == 1){
+						t4.setText(value);
+						if(t4.getText().equals(mDeviceTxPower)){
+							t4.setTextColor(Color.parseColor("#aaaaaa"));
+							TXPOWER_CHANGED = 0;
+						}
+						else {
+							t4.setTextColor(Color.parseColor("#3a8abe"));
+							TXPOWER_CHANGED = 1;
+						}
+					}else if(index == 2){
+						t5.setText(value);
+						if(t5.getText().equals(mDeviceMajor)){
+							t5.setTextColor(Color.parseColor("#aaaaaa"));
+							MAJOR_CHANGED = 0;
+						}
+						else {
+							t5.setTextColor(Color.parseColor("#3a8abe"));
+							MAJOR_CHANGED = 1;
+						}
+					}else{
+						t6.setText(value);
+						if(t6.getText().equals(mDeviceMinor)){
+							t6.setTextColor(Color.parseColor("#aaaaaa"));
+							MINOR_CHANGED = 0;
+						}
+						else {
+							t6.setTextColor(Color.parseColor("#3a8abe"));
+							MINOR_CHANGED = 1;
+						}
+					}
+					IS_CHANGED = NAME_CHANGED + TXPOWER_CHANGED + MAJOR_CHANGED + MINOR_CHANGED;
 				}
-				IS_CHANGED = 1;
 			}
 		};
 	};
