@@ -6,8 +6,7 @@
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="com.example.nemus.bluetoothreceiver.MainActivity">
+                android:paddingTop="@dimen/activity_vertical_margin">
 
 	<LinearLayout
 		android:orientation="vertical"
@@ -72,10 +71,11 @@
 		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/relativeLayout"
+			android:id="@+id/namespace"
 			android:layout_below="@+id/textView13"
 			android:layout_marginTop="8dp"
-			android:layout_alignParentStart="true">
+			android:layout_alignParentStart="true"
+			android:clickable="true">
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -100,10 +100,11 @@
 		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/relativeLayout2"
-			android:layout_below="@+id/relativeLayout"
+			android:id="@+id/txpowerspace"
+			android:layout_below="@+id/namespace"
 			android:layout_centerHorizontal="true"
-			android:layout_marginTop="8dp">
+			android:layout_marginTop="8dp"
+			android:clickable="true">
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -127,10 +128,11 @@
 		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/relativeLayout3"
-			android:layout_below="@+id/relativeLayout2"
+			android:id="@+id/majorspace"
+			android:layout_below="@+id/txpowerspace"
 			android:layout_marginTop="8dp"
-			android:layout_centerHorizontal="true">
+			android:layout_centerHorizontal="true"
+			android:clickable="true">
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -154,10 +156,11 @@
 		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/relativeLayout4"
-			android:layout_below="@+id/relativeLayout3"
+			android:id="@+id/minorspace"
+			android:layout_below="@+id/majorspace"
 			android:layout_marginTop="8dp"
-			android:layout_centerHorizontal="true">
+			android:layout_centerHorizontal="true"
+			android:clickable="true">
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -185,14 +188,14 @@
 			android:id="@+id/textView15"
 			android:textSize="23dp"
 			android:layout_marginTop="20dp"
-			android:layout_below="@+id/relativeLayout4"
+			android:layout_below="@+id/minorspace"
 			android:layout_alignParentStart="true"/>
 
 		<Switch
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/switch1"
-			android:layout_alignTop="@+id/textView15"
+			android:layout_below="@+id/textView15"
 			android:layout_alignParentEnd="true"
 			android:checked="false"/>
 

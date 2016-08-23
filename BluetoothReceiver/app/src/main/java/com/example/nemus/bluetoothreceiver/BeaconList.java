@@ -4,7 +4,6 @@ package com.example.nemus.bluetoothreceiver;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -42,6 +40,7 @@ public class BeaconList extends AppCompatActivity {
     private static final long SCAN_PERIOD = 10000;
 
     //private ListView BeaconListView;
+    private ListView BeaconListView;
 
 
     ArrayAdapter adapter;
@@ -51,7 +50,7 @@ public class BeaconList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beaconlist);
 
-        ListView BeaconListView = (ListView) findViewById(R.id.list);
+        BeaconListView = (ListView) findViewById(R.id.list);
         // Initializes list view adapter.
         mLeDeviceListAdapter = new LeDeviceListAdapter();
         BeaconListView.setAdapter(mLeDeviceListAdapter);
@@ -319,11 +318,16 @@ public class BeaconList extends AppCompatActivity {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("OCL", " "+ index);
+                    //Log.d("OCL", " "+ index);
                     Intent intent = new Intent(getApplicationContext(), BeaconController.class);
                     intent.putExtra(BeaconController.data1, device.device.getName());
                     intent.putExtra(BeaconController.data2, device.device.getAddress());
-                    intent.putExtra(BeaconController.data3, device.device.getUuids());
+                    // ************************************************** I'm here ************************************************************
+                    intent.putExtra(BeaconController.data3, "TxPower");
+                    intent.putExtra(BeaconController.data4, device.major+"");
+                    intent.putExtra(BeaconController.data5, device.minor+"");
+                    if(device.temp == 128) intent.putExtra(BeaconController.data6, "OFF");
+                    else intent.putExtra(BeaconController.data6, "ON");
 
                     //final Intent intent = new Intent(this, BeaconController.class);
                     //intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());

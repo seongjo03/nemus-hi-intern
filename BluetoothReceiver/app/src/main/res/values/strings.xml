@@ -5,4 +5,5 @@
     <string name="beaconlist">iNOW Scanner</string>
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
+    <string name="controller">iNOW Editor</string>
 </resources>
